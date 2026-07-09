@@ -1,4 +1,4 @@
-package com.etech.model;
+package org.generation.e_tech_mexico.modelo;
 
 public class PedidoDetalle {
 
@@ -48,4 +48,6 @@ public class PedidoDetalle {
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
+
+
 }

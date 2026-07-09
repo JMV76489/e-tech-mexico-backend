@@ -1,12 +1,27 @@
-package com.etech.service;
+package org.generation.e_tech_mexico.service;
 
+import com.etech.model.PedidoDetalle;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class PedidoDetalleService {
 
-    public String mensaje() {
-        return "Servicio de PedidoDetalle funcionando";
+    public List<PedidoDetalle> obtenerTodos() {
+        return new ArrayList<>();
     }
 
+    public PedidoDetalle obtenerPorId(Long id) {
+        return null;
+    }
+
+    public PedidoDetalle guardar(PedidoDetalle pedidoDetalle) {
+        return pedidoDetalle;
+    }
+
+    public void eliminar(Long id) {
+
+    }
 }
