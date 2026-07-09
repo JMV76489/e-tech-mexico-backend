@@ -12,7 +12,6 @@ public class PedidoService {
 
     private final ArrayList<Pedido> lista = new ArrayList<>();
 
-
     public Pedido createPedido(Pedido pedido) {
         return lista.add(pedido) ? pedido : null;
     }
