@@ -1,4 +1,4 @@
-package com.etech.service;
+package org.generation.e_tech_mexico.service;
 
 import com.etech.model.PedidoDetalle;
 import java.util.ArrayList;
