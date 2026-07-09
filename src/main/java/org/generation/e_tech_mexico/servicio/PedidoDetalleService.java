@@ -1,5 +1,27 @@
-package org.generation.e_tech_mexico.servicio;
+package org.generation.e_tech_mexico.service;
 
-//Todo Nathaly
+import com.etech.model.PedidoDetalle;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.stereotype.Service;
+
+
+@Service
 public class PedidoDetalleService {
+
+    public List<PedidoDetalle> obtenerTodos() {
+        return new ArrayList<>();
+    }
+
+    public PedidoDetalle obtenerTodos(Long id) {
+        return null;
+    }
+
+    public PedidoDetalle guardar(PedidoDetalle pedidoDetalle) {
+        return pedidoDetalle;
+    }
+
+    public void eliminar(Long id) {
+
+    }
 }
