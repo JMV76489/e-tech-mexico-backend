@@ -5,27 +5,22 @@ import java.time.LocalDateTime;
 //Todo realizar Jose
 public class Pedido {
 
-    // Mapeo de campos de la tabla SQL 'pedido'
-    private Long idPedido;      // `id_pedido` INT
-    private Long idUsuario;     // `id_usuario` INT
-    private LocalDateTime fechaPedido; // `fecha_pedido` DATETIME (Simulado como String)
-    private Double total;       // `total` DECIMAL(10,2)
-    private LocalDateTime fechaEntrega;// `fecha_entrega` DATETIME (Simulado como String)
+    private Long idPedido;
+    private Long idUsuario;
+    private LocalDateTime fechaPedido;
+    private Double total;
+    private LocalDateTime fechaEntrega;
 
-    // Constructor vacio
     public Pedido(){
-    }// Constructor Pedido vacio
+    }
 
-    // Constructor con todos los parámetros (Ideal para simular datos en el servicio)
     public Pedido(Long idPedido, Long idUsuario, LocalDateTime fechaPedido, Double total, LocalDateTime fechaEntrega){
         this.idPedido = idPedido;
         this.idUsuario = idUsuario;
         this.fechaPedido = fechaPedido;
         this.total = total;
         this.fechaEntrega = fechaEntrega;
-    }// Constructor Pedido
-
-    // Getters & Setters
+    }
 
     public Long getIdPedido() {
         return idPedido;
@@ -67,4 +62,4 @@ public class Pedido {
         this.fechaEntrega = fechaEntrega;
     }
 
-}// clase Pedido
+}
