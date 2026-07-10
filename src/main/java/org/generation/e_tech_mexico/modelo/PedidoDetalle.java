@@ -3,6 +3,8 @@ package org.generation.e_tech_mexico.modelo;
 public class PedidoDetalle {
 
     private Long idPedidoDetalle;
+    private Long idProducto;
+    private Long idPedido;
     private int cantidad;
     private double precioUnitario;
     private double subtotal;
@@ -10,8 +12,10 @@ public class PedidoDetalle {
     public PedidoDetalle() {
     }
 
-    public PedidoDetalle(Long idPedidoDetalle, int cantidad, double precioUnitario, double subtotal) {
+    public PedidoDetalle(Long idPedidoDetalle, Long idProducto, Long idPedido, int cantidad, double precioUnitario, double subtotal) {
         this.idPedidoDetalle = idPedidoDetalle;
+        this.idProducto = idProducto;
+        this.idPedido = idPedido;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
@@ -23,6 +27,22 @@ public class PedidoDetalle {
 
     public void setIdPedidoDetalle(Long idPedidoDetalle) {
         this.idPedidoDetalle = idPedidoDetalle;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public Long getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
     }
 
     public int getCantidad() {
@@ -48,6 +68,4 @@ public class PedidoDetalle {
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
-
-
 }
