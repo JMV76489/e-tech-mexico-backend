@@ -1,23 +1,38 @@
 package org.generation.e_tech_mexico.modelo;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "pedido_detalle")
 public class PedidoDetalle {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido_detalle")
     private Long idPedidoDetalle;
-    private Long idProducto;
-    private Long idPedido;
+
+    @ManyToOne
+    @JoinColumn(name = "id_producto", nullable = false)
+    private Producto producto;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pedido", nullable = false)
+    private Pedido pedido;
+
+    @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
-    private Double precioUnitario;
+
+    @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
     private Double subtotal;
 
     public PedidoDetalle() {
     }
 
-    public PedidoDetalle(Long idPedidoDetalle, Long idProducto, Long idPedido, Integer cantidad, Double precioUnitario, Double subtotal) {
+    public PedidoDetalle(Long idPedidoDetalle, Producto producto, Pedido pedido, Integer cantidad, Double subtotal) {
         this.idPedidoDetalle = idPedidoDetalle;
-        this.idProducto = idProducto;
-        this.idPedido = idPedido;
+        this.producto = producto;
+        this.pedido = pedido;
         this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
     }
 
@@ -29,20 +44,20 @@ public class PedidoDetalle {
         this.idPedidoDetalle = idPedidoDetalle;
     }
 
-    public Long getIdProducto() {
-        return idProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
-    public Long getIdPedido() {
-        return idPedido;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setIdPedido(Long idPedido) {
-        this.idPedido = idPedido;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
     public Integer getCantidad() {
@@ -51,14 +66,6 @@ public class PedidoDetalle {
 
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public Double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(Double precioUnitario) {
-        this.precioUnitario = precioUnitario;
     }
 
     public Double getSubtotal() {

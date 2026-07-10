@@ -1,15 +1,36 @@
 package org.generation.e_tech_mexico.modelo;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "producto")
 public class Producto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_producto")
     Long idProducto;
+
+    @Column(name = "nombre", length = 50)
     String nombre;
+
+    @Column(name = "descripcion", columnDefinition = "TEXT")
     String descripcion;
+
+    @Column(name = "precio", precision = 7, scale = 2)
     Double precio;
+
+    @Column(name = "categoria", length = 50)
     String categoria;
+
+    @Column(name = "url_imagen", columnDefinition = "TEXT")
     String urlImagen;
+
+    @Column(name = "stock")
     Integer stock;
+
+    @Column(name = "fecha_creacion")
     LocalDateTime fechaCreacion;
 
     public Producto() {
