@@ -19,6 +19,11 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
 
+    @PostMapping
+    public Pedido createPedido(@RequestBody Pedido pedido) {
+        return pedidoService.createPedido(pedido);
+    }
+
     @GetMapping
     public List<Pedido> getPedidos() {
         return pedidoService.getPedidos();
@@ -27,16 +32,6 @@ public class PedidoController {
     @GetMapping("{pedidoId}")
     public Pedido getPedido(@PathVariable("pedidoId") Long id) {
         return pedidoService.getPedido(id);
-    }
-
-    @PostMapping
-    public Pedido createPedido(@RequestBody Pedido pedido) {
-        return pedidoService.createPedido(pedido);
-    }
-
-    @DeleteMapping("{pedidoId}")
-    public Pedido removePedido(@PathVariable("pedidoId") Long id) {
-        return pedidoService.removePedido(id);
     }
 
     @PutMapping("{pedidoId}")
@@ -50,4 +45,10 @@ public class PedidoController {
         return pedidoService.updatePedido(id, idUsuario, fechaPedido, total, fechaEntrega);
 
     }
+
+    @DeleteMapping("{pedidoId}")
+    public Pedido deletePedido(@PathVariable("pedidoId") Long id) {
+        return pedidoService.deletePedido(id);
+    }
+
 }
