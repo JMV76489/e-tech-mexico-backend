@@ -18,7 +18,7 @@ public class Producto {
     @Column(name = "descripcion", columnDefinition = "TEXT")
     String descripcion;
 
-    @Column(name = "precio", precision = 7, scale = 2)
+    @Column(name = "precio", precision = 7)
     Double precio;
 
     @Column(name = "categoria", length = 50)

@@ -22,7 +22,7 @@ public class PedidoDetalle {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
+    @Column(name = "subtotal", precision = 10, nullable = false)
     private Double subtotal;
 
     public PedidoDetalle() {
