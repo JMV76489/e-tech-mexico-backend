@@ -28,8 +28,7 @@ public class PedidoDetalle {
     public PedidoDetalle() {
     }
 
-    public PedidoDetalle(Long idPedidoDetalle, Producto producto, Pedido pedido, Integer cantidad, Double subtotal) {
-        this.idPedidoDetalle = idPedidoDetalle;
+    public PedidoDetalle(Producto producto, Pedido pedido, Integer cantidad, Double subtotal) {
         this.producto = producto;
         this.pedido = pedido;
         this.cantidad = cantidad;

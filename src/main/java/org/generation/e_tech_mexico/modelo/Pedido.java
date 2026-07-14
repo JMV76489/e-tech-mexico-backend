@@ -27,11 +27,10 @@ public class Pedido {
     @Column(name = "fecha_entrega")
     private LocalDateTime fechaEntrega;
 
-    public Pedido(){
+    public Pedido() {
     }
 
-    public Pedido(Long idPedido, Usuario usuario, LocalDateTime fechaPedido, Double total, LocalDateTime fechaEntrega){
-        this.idPedido = idPedido;
+    public Pedido(Usuario usuario, LocalDateTime fechaPedido, Double total, LocalDateTime fechaEntrega) {
         this.usuario = usuario;
         this.fechaPedido = fechaPedido;
         this.total = total;

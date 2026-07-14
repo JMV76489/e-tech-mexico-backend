@@ -36,7 +36,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(Long idProducto, String nombre, String descripcion, Double precio, String categoria, String urlImagen, Integer stock, LocalDateTime fechaCreacion) {
+    public Producto(String nombre, String descripcion, Double precio, String categoria, String urlImagen, Integer stock, LocalDateTime fechaCreacion) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
