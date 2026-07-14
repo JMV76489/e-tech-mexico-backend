@@ -1,6 +1,8 @@
 package org.generation.e_tech_mexico.controlador;
 
+import org.generation.e_tech_mexico.modelo.Pedido;
 import org.generation.e_tech_mexico.modelo.PedidoDetalle;
+import org.generation.e_tech_mexico.modelo.Producto;
 import org.generation.e_tech_mexico.servicio.PedidoDetalleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +38,12 @@ public class PedidoDetalleController {
     @PutMapping("{pedidoDetalleId}")
     public PedidoDetalle updatePedidoDetalle(
             @PathVariable("pedidoDetalleId") Long id,
-            @RequestParam(value = "idProducto", required = false) Long idProducto,
-            @RequestParam(value = "idPedido", required = false) Long idPedido,
+            @RequestParam(value = "idProducto", required = false) Producto producto,
+            @RequestParam(value = "idPedido", required = false) Pedido pedido,
             @RequestParam(value = "cantidad", required = false) Integer cantidad,
             @RequestParam(value = "subtotal", required = false) Double subtotal
     ) {
-        return pedidoDetalleService.updatePedidoDetalle(id, idProducto, idPedido, cantidad, subtotal);
+        return pedidoDetalleService.updatePedidoDetalle(id, producto, pedido, cantidad, subtotal);
     }
 
     @DeleteMapping("{pedidoDetalleId}")
