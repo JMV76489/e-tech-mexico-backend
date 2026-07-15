@@ -61,6 +61,6 @@ public class UsuarioService {
     }
 
     public Usuario obtenerUsuarioPorCorreo(String email) {
-
+        return usuarioRepository.findByCorreoElectronico(email).orElse(null);
     }
 }
