@@ -1,15 +1,13 @@
 package org.generation.e_tech_mexico.servicio;
 
-import jakarta.servlet.ServletException;
+import org.generation.e_tech_mexico.dto.RegistroUsuarioDTO;
 import org.generation.e_tech_mexico.modelo.Usuario;
 import org.generation.e_tech_mexico.repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -25,14 +23,18 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Usuario createUsuario(Usuario usuario) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico());
+    public Usuario createUsuario(RegistroUsuarioDTO registroDTO) {
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombreCompleto(registroDTO.getNombre()); // Ajusta los setters según los nombres de atributos en tu clase Usuario.java
+        nuevoUsuario.setCorreoElectronico(registroDTO.getEmail());
+        nuevoUsuario.setTelefono(registroDTO.getTelefono());
 
-        if (usuarioOptional.isEmpty()) {
-            return usuarioRepository.save(usuario);
-        }
+        // 2. Encriptar la contraseña usando BCrypt antes de guardar
+        String contrasenaEncriptada = passwordEncoder.encode(registroDTO.getContrasena());
+        nuevoUsuario.setPassword(contrasenaEncriptada); // O setContrasenia() según tu entidad
 
-        return null;
+        // 3. Persistir en la base de datos MySQL
+        return usuarioRepository.save(nuevoUsuario);
     }
 
     public List<Usuario> getUsuarios() {
@@ -56,5 +58,9 @@ public class UsuarioService {
             return deletedUsuario;
         }
         return null;
+    }
+
+    public Usuario obtenerUsuarioPorCorreo(String email) {
+
     }
 }

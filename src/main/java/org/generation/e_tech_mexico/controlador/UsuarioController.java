@@ -1,11 +1,14 @@
 package org.generation.e_tech_mexico.controlador;
 
+import org.generation.e_tech_mexico.dto.LoginRequestDTO;
 import org.generation.e_tech_mexico.dto.RegistroUsuarioDTO;
 import org.generation.e_tech_mexico.modelo.Usuario;
 import org.generation.e_tech_mexico.servicio.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -14,15 +17,17 @@ import java.util.List;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.createUsuario(usuario);
+    public Usuario createUser(@RequestBody RegistroUsuarioDTO registroDTO) {
+        return usuarioService.createUsuario(registroDTO);
     }
 
     @GetMapping
@@ -54,9 +59,32 @@ public class UsuarioController {
 
     @PostMapping("/registro")
     public ResponseEntity<?> registrarUsuario(@RequestBody RegistroUsuarioDTO registroDTO) {
-        // Aquí se reciben los datos seguros, los validas y posteriormente
-        // Mapeo de los campos en la entidad Usuario para persistirlos en la base de datos.
-        return ResponseEntity.ok("Usuario registrado exitosamente");
+        try {
+            Usuario usuarioGuardado = usuarioService.createUsuario(registroDTO);
+            return ResponseEntity.ok(usuarioGuardado); // Retorna el usuario creado (sin contraseña expuesta si lo prefieres) o un mensaje de éxito
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al registrar el usuario: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginDTO) {
+        // 1. Buscar al usuario por correo
+        Usuario usuario = usuarioService.obtenerUsuarioPorCorreo(loginDTO.getEmail()); // Deberás crear este método en tu servicio
+
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Correo electrónico no registrado.");
+        }
+
+        // 2. Validar que la contraseña ingresada coincida con el hash de BCrypt en la base de datos
+        boolean coincide = passwordEncoder.matches(loginDTO.getContrasena(), usuario.getPassword());
+
+        if (!coincide) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta.");
+        }
+
+        // 3. Responder con éxito si las credenciales son correctas
+        return ResponseEntity.ok(usuario); // O retorna un JSON con los datos básicos que necesite el Front-End
     }
 
 
