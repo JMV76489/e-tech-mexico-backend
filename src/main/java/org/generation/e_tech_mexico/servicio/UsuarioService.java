@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import org.generation.e_tech_mexico.modelo.Usuario;
 import org.generation.e_tech_mexico.repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,10 +16,14 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
+
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Usuario createUsuario(Usuario usuario) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico());
