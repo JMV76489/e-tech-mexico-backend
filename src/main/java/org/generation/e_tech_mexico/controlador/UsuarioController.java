@@ -1,8 +1,10 @@
 package org.generation.e_tech_mexico.controlador;
 
+import org.generation.e_tech_mexico.dto.RegistroUsuarioDTO;
 import org.generation.e_tech_mexico.modelo.Usuario;
 import org.generation.e_tech_mexico.servicio.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,4 +51,13 @@ public class UsuarioController {
     public Usuario deleteUsuario(@PathVariable("usuarioId") Long id) {
         return usuarioService.deleteUsuario(id);
     }
+
+    @PostMapping("/registro")
+    public ResponseEntity<?> registrarUsuario(@RequestBody RegistroUsuarioDTO registroDTO) {
+        // Aquí se reciben los datos seguros, los validas y posteriormente
+        // Mapeo de los campos en la entidad Usuario para persistirlos en la base de datos.
+        return ResponseEntity.ok("Usuario registrado exitosamente");
+    }
+
+
 }

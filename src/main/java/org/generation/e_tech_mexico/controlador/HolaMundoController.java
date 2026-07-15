@@ -1,4 +1,4 @@
-package org.generation.e_tech_mexico;
+package org.generation.e_tech_mexico.controlador;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
