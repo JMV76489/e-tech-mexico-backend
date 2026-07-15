@@ -2,6 +2,7 @@ package org.generation.e_tech_mexico.servicio;
 
 import jakarta.servlet.ServletException;
 import org.generation.e_tech_mexico.modelo.Categoria;
+import org.generation.e_tech_mexico.repositorio.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import java.util.Optional;
 @Service
 public class CategoriaService {
 
-    private final org.generation.api.repositorios.CategoriaRepository categoriaRepository;
+    private final CategoriaRepository categoriaRepository;
 
     @Autowired
-    public CategoriaService(org.generation.api.repositorios.CategoriaRepository categoriaRepository) {
+    public CategoriaService(CategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
     }
 

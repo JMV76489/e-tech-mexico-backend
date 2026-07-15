@@ -1,4 +1,4 @@
-package org.generation.api.repositorios;
+package org.generation.e_tech_mexico.repositorio;
 
 import org.generation.e_tech_mexico.modelo.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
