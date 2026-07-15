@@ -18,7 +18,7 @@ public class Producto {
     @Column(name = "descripcion", columnDefinition = "TEXT")
     String descripcion;
 
-    @Column(name = "precio", precision = 7)
+    @Column(name = "precio")
     Double precio;
 
     @Column(name = "categoria", length = 50)
@@ -37,7 +37,6 @@ public class Producto {
     }
 
     public Producto(String nombre, String descripcion, Double precio, String categoria, String urlImagen, Integer stock, LocalDateTime fechaCreacion) {
-        this.idProducto = idProducto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
