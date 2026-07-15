@@ -1,5 +1,6 @@
 package org.generation.e_tech_mexico.controlador;
 
+import org.generation.e_tech_mexico.dto.PassDto;
 import org.generation.e_tech_mexico.modelo.Usuario;
 import org.generation.e_tech_mexico.servicio.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,8 @@ public class UsuarioController {
     }
 
     @PutMapping("{usuarioId}")
-    public Usuario updateUsuario(
-            @PathVariable("usuarioId") Long id,
-            @RequestParam(value = "nombreCompleto", required = false) String nombreCompleto,
-            @RequestParam(value = "correoElectronico", required = false) String correoElectronico,
-            @RequestParam(value = "telefono", required = false) String telefono,
-            @RequestParam(value = "password", required = false) String password,
-            @RequestParam(value = "direccionEntrega", required = false) String direccionEntrega
-    ) {
-        return usuarioService.updateUsuario(id, nombreCompleto, correoElectronico, telefono, password, direccionEntrega);
+    public Usuario updateUsuario(@PathVariable("id") Long id, @RequestBody PassDto passDto) {
+        return usuarioService.updateUsuarioPassword(id, passDto);
     }
 
     @DeleteMapping("{usuarioId}")
