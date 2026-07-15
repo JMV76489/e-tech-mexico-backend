@@ -1,22 +1,37 @@
 package org.generation.e_tech_mexico.modelo;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
-//Todo realizar Jose
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+@Entity
+@Table(name = "pedido")
 public class Pedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido")
     private Long idPedido;
-    private Long idUsuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
+
+    @Column(name = "fecha_pedido")
     private LocalDateTime fechaPedido;
+
+    @Column(name = "total", nullable = false)
     private Double total;
+
+    @Column(name = "fecha_entrega")
     private LocalDateTime fechaEntrega;
 
-    public Pedido(){
+    public Pedido() {
     }
 
-    public Pedido(Long idPedido, Long idUsuario, LocalDateTime fechaPedido, Double total, LocalDateTime fechaEntrega){
-        this.idPedido = idPedido;
-        this.idUsuario = idUsuario;
+    public Pedido(Usuario usuario, LocalDateTime fechaPedido, Double total, LocalDateTime fechaEntrega) {
+        this.usuario = usuario;
         this.fechaPedido = fechaPedido;
         this.total = total;
         this.fechaEntrega = fechaEntrega;
@@ -30,12 +45,12 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public LocalDateTime getFechaPedido() {
@@ -61,5 +76,4 @@ public class Pedido {
     public void setFechaEntrega(LocalDateTime fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
-
 }

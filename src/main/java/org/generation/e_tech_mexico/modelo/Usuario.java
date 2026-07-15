@@ -1,17 +1,35 @@
 package org.generation.e_tech_mexico.modelo;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "usuario")
 public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Long idUsuario;
+
+    @Column(name = "nombre_completo", length = 150)
     String nombreCompleto;
+
+    @Column(name = "correo_electronico", nullable = false, length = 254)
     String correoElectronico;
+
+    @Column(name = "telefono", length = 20)
     String telefono;
+
+    @Column(name = "password", nullable = false, length = 255)
     String password;
+
+    @Column(name = "direccion_entrega", length = 255)
     String direccionEntrega;
 
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, String nombreCompleto, String correoElectronico, String telefono, String password, String direccionEntrega) {
+    public Usuario(String nombreCompleto, String correoElectronico, String telefono, String password, String direccionEntrega) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.correoElectronico = correoElectronico;

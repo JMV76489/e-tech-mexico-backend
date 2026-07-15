@@ -1,6 +1,8 @@
 package org.generation.e_tech_mexico.servicio;
 
+import org.generation.e_tech_mexico.modelo.Pedido;
 import org.generation.e_tech_mexico.modelo.PedidoDetalle;
+import org.generation.e_tech_mexico.modelo.Producto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,11 +29,11 @@ public class PedidoDetalleService {
                 .orElse(null);
     }
 
-    public PedidoDetalle updatePedidoDetalle(Long idPedidoDetalle, Long idProducto, Long idPedido, Integer cantidad, Double subtotal) {
+    public PedidoDetalle updatePedidoDetalle(Long idPedidoDetalle, Producto producto, Pedido pedido, Integer cantidad, Double subtotal) {
         for (PedidoDetalle pedidoDetalle : lista) {
             if (pedidoDetalle.getIdPedidoDetalle().equals(idPedidoDetalle)) {
-                if (idProducto != null) pedidoDetalle.setIdProducto(idProducto);
-                if (idPedido != null) pedidoDetalle.setIdPedido(idPedido);
+                if (producto != null) pedidoDetalle.setProducto(producto);
+                if (pedido != null) pedidoDetalle.setPedido(pedido);
                 if (cantidad != null) pedidoDetalle.setCantidad(cantidad);
                 if (subtotal != null) pedidoDetalle.setSubtotal(subtotal);
                 return pedidoDetalle;

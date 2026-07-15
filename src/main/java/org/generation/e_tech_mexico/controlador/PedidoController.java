@@ -1,6 +1,7 @@
 package org.generation.e_tech_mexico.controlador;
 
 import org.generation.e_tech_mexico.modelo.Pedido;
+import org.generation.e_tech_mexico.modelo.Usuario;
 import org.generation.e_tech_mexico.servicio.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +38,12 @@ public class PedidoController {
     @PutMapping("{pedidoId}")
     public Pedido updatePedido(
             @PathVariable("pedidoId") Long id,
-            @RequestParam(value = "idUsuario", required = false) Long idUsuario,
+            @RequestParam(value = "idUsuario", required = false) Usuario usuario,
             @RequestParam(value = "fechaPedido", required = false) LocalDateTime fechaPedido,
             @RequestParam(value = "total", required = false) Double total,
             @RequestParam(value = "fechaEntrega", required = false) LocalDateTime fechaEntrega
     ) {
-        return pedidoService.updatePedido(id, idUsuario, fechaPedido, total, fechaEntrega);
+        return pedidoService.updatePedido(id, usuario, fechaPedido, total, fechaEntrega);
 
     }
 

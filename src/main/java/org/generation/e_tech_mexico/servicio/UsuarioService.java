@@ -1,52 +1,54 @@
 package org.generation.e_tech_mexico.servicio;
 
+import jakarta.servlet.ServletException;
 import org.generation.e_tech_mexico.modelo.Usuario;
+import org.generation.e_tech_mexico.repositorio.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
 
-    private final ArrayList<Usuario> lista = new ArrayList<>();
+    private final UsuarioRepository usuarioRepository;
+
+    @Autowired
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public Usuario createUsuario(Usuario usuario) {
-        return lista.add(usuario) ? usuario : null;
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico());
+
+        if (usuarioOptional.isEmpty()) {
+            return usuarioRepository.save(usuario);
+        }
+
+        return null;
     }
 
     public List<Usuario> getUsuarios() {
-        return lista;
+        return usuarioRepository.findAll();
     }
 
     public Usuario getUsuario(Long idUsuario) {
-        return lista
-                .stream()
-                .filter(usuario -> usuario.getIdUsuario().equals(idUsuario))
-                .findFirst()
-                .orElse(null);
+        return usuarioRepository.findById(idUsuario).orElseThrow(() -> new IllegalArgumentException("El usuario con el id [" + idUsuario + "] no existe"));
     }
 
     public Usuario updateUsuario(Long idUsuario, String nombreCompleto, String correoElectronico, String telefono, String password, String direccionEntrega) {
-        for (Usuario usuario : lista) {
-            if (usuario.getIdUsuario().equals(idUsuario)) {
-                if (nombreCompleto != null) usuario.setNombreCompleto(nombreCompleto);
-                if (correoElectronico != null) usuario.setCorreoElectronico(correoElectronico);
-                if (telefono != null) usuario.setTelefono(telefono);
-                if (password != null) usuario.setPassword(password);
-                if (direccionEntrega != null) usuario.setDireccionEntrega(direccionEntrega);
-                return usuario;
-            }
-        }
+
+
         return null;
     }
 
     public Usuario deleteUsuario(Long idUsuario) {
-        for (Usuario usuario : lista) {
-            if (usuario.getIdUsuario().equals(idUsuario)) {
-                lista.remove(usuario);
-                return usuario;
-            }
+        if (usuarioRepository.existsById(idUsuario)) {
+            Usuario deletedUsuario = usuarioRepository.findById(idUsuario).get();
+            usuarioRepository.deleteById(idUsuario);
+            return deletedUsuario;
         }
         return null;
     }

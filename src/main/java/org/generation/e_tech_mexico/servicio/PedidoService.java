@@ -1,6 +1,7 @@
 package org.generation.e_tech_mexico.servicio;
 
 import org.generation.e_tech_mexico.modelo.Pedido;
+import org.generation.e_tech_mexico.modelo.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,10 +28,10 @@ public class PedidoService {
                 .findFirst().orElse(null);
     }
 
-    public Pedido updatePedido(Long id, Long idUsuario, LocalDateTime fechaPedido, Double total, LocalDateTime fechaEntrega) {
+    public Pedido updatePedido(Long id, Usuario usuario, LocalDateTime fechaPedido, Double total, LocalDateTime fechaEntrega) {
         for (Pedido pedido : lista) {
             if (pedido.getIdPedido().equals(id)) {
-                if (idUsuario != null) pedido.setIdUsuario(idUsuario);
+                if (usuario != null) pedido.setUsuario(usuario);
                 if (fechaPedido != null) pedido.setFechaPedido(fechaPedido);
                 if (total != null) pedido.setTotal(total);
                 if (fechaEntrega != null) pedido.setFechaEntrega(fechaEntrega);
