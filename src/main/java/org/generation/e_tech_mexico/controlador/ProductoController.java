@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/productos/")
+@CrossOrigin("http://127.0.0.1:5502/")
 public class ProductoController {
 
     private final ProductoService productoService;

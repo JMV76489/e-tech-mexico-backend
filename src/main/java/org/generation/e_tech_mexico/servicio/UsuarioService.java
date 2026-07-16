@@ -1,40 +1,39 @@
 package org.generation.e_tech_mexico.servicio;
 
-import org.generation.e_tech_mexico.dto.RegistroUsuarioDTO;
+import io.jsonwebtoken.Jwts;
+import jakarta.servlet.ServletException;
+import org.generation.e_tech_mexico.configuracion.JwtFilter;
+import org.generation.e_tech_mexico.dto.LoginRequest;
+import org.generation.e_tech_mexico.dto.PassDto;
 import org.generation.e_tech_mexico.modelo.Usuario;
 import org.generation.e_tech_mexico.repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public Usuario createUsuario(Usuario usuario) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreoElectronico(usuario.getCorreoElectronico());
 
-    public Usuario createUsuario(RegistroUsuarioDTO registroDTO) {
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setNombreCompleto(registroDTO.getNombre()); // Ajusta los setters según los nombres de atributos en tu clase Usuario.java
-        nuevoUsuario.setCorreoElectronico(registroDTO.getEmail());
-        nuevoUsuario.setTelefono(registroDTO.getTelefono());
-
-        // 2. Encriptar la contraseña usando BCrypt antes de guardar
-        String contrasenaEncriptada = passwordEncoder.encode(registroDTO.getContrasena());
-        nuevoUsuario.setPassword(contrasenaEncriptada); // O setContrasenia() según tu entidad
-
-        // 3. Persistir en la base de datos MySQL
-        return usuarioRepository.save(nuevoUsuario);
+        if (usuarioOptional.isEmpty()) {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            return usuarioRepository.save(usuario);
+        }
+        return null;
     }
 
     public List<Usuario> getUsuarios() {
@@ -45,9 +44,16 @@ public class UsuarioService {
         return usuarioRepository.findById(idUsuario).orElseThrow(() -> new IllegalArgumentException("El usuario con el id [" + idUsuario + "] no existe"));
     }
 
-    public Usuario updateUsuario(Long idUsuario, String nombreCompleto, String correoElectronico, String telefono, String password, String direccionEntrega) {
+    public Usuario updateUsuarioPassword(Long id, PassDto passDto) {
+        if (usuarioRepository.existsById(id)) {
+            Usuario usuario = usuarioRepository.findById(id).get();
 
-
+            if (passwordEncoder.matches(passDto.getPassActual(), usuario.getPassword())) {
+                System.out.println("Actualizando usuario");
+                usuario.setPassword(passwordEncoder.encode(passDto.getPassNuevo()));
+                return usuarioRepository.save(usuario);
+            }
+        }
         return null;
     }
 
@@ -60,7 +66,29 @@ public class UsuarioService {
         return null;
     }
 
-    public Usuario obtenerUsuarioPorCorreo(String email) {
-        return usuarioRepository.findByCorreoElectronico(email).orElse(null);
+    public boolean validarUsuario(LoginRequest loginRequest) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByCorreoElectronico(loginRequest.getEmail());
+
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+
+            if (passwordEncoder.matches(loginRequest.getPassword(), usuario.getPassword())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String generarToken(String email) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, 24);
+
+        return Jwts.builder()
+                .subject(email)
+                .claim("role", "user")
+                .issuedAt(new Date())
+                .expiration(calendar.getTime())
+                .signWith(JwtFilter.getSignInKey())
+                .compact();
     }
 }

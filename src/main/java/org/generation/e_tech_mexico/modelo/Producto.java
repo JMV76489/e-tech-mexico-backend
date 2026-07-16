@@ -12,7 +12,7 @@ public class Producto {
     @Column(name = "id_producto")
     Long idProducto;
 
-    @Column(name = "nombre", length = 50)
+    @Column(name = "nombre", length = 150)
     String nombre;
 
     @Column(name = "descripcion", columnDefinition = "TEXT")
