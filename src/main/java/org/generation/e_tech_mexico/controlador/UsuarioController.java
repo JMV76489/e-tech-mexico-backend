@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/usuarios/")
+@CrossOrigin("http://127.0.0.1:5502/")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

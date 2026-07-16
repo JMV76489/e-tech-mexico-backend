@@ -5,13 +5,11 @@ import org.generation.e_tech_mexico.dto.LoginRequest;
 import org.generation.e_tech_mexico.dto.TokenAcceso;
 import org.generation.e_tech_mexico.servicio.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/login/")
+@CrossOrigin("http://127.0.0.1:5502/")
 public class LoginController {
 
     private final UsuarioService usuarioService;
